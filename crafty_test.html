@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <script src="crafty-min.js"></script>
+
+  </head>
+  <body>
+    <script>
+      Crafty.init(600,300);
+      Crafty.background('rgb(127,127,127)');
+
+      Crafty.e("2D, DOM, Color, Collision")
+        .color('rgb(255,255,255)')
+        .attr({x:Crafty.math.randomInt(10,600),y:Crafty.math.randomInt(10,300),w:10,h:10,
+          dX: Crafty.math.randomInt(2,50),
+          dY: Crafty.math.randomInt(2,50)})
+        .bind('EnterFrame', function () {
+          if (this.y <= 0 || this.y >= 290){
+            Crafty("Points").each(function() {
+              this.text(++this.points + " Collisions")
+            });
+            this.dY *= -1;
+          }
+          if (this.x <= 0 || this.x >= 590){
+            this.dX *= -1;
+            Crafty("Points").each(function() {
+              this.text(++this.points + " Collisions")
+            });
+          }
+
+          this.x += this.dX;
+          this.y += this.dY;
+        })
+
+      Crafty.e("Points, DOM, 2D, Text")
+        .attr({x:20,y:20,w:140,h:20,points:0})
+        .text("0 Collisions");
+    </script>
+  </body>
+</html>
